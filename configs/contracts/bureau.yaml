@@ -1,0 +1,192 @@
+name: bureau
+filename: bureau.csv
+primary_key: SK_ID_BUREAU
+row_count_reference: 1716428
+row_count_tolerance: 0.02
+columns:
+- name: SK_ID_CURR
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 100001.0
+  max_value: 456255.0
+- name: SK_ID_BUREAU
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: true
+  allowed_values: null
+  min_value: 5000000.0
+  max_value: 6843457.0
+- name: CREDIT_ACTIVE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Active
+  - Bad debt
+  - Closed
+  - Sold
+  min_value: null
+  max_value: null
+- name: CREDIT_CURRENCY
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - currency 1
+  - currency 2
+  - currency 3
+  - currency 4
+  min_value: null
+  max_value: null
+- name: DAYS_CREDIT
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -2922.0
+  max_value: 0.0
+- name: CREDIT_DAY_OVERDUE
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 2792.0
+- name: DAYS_CREDIT_ENDDATE
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.061496
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -42060.0
+  max_value: 31199.0
+- name: DAYS_ENDDATE_FACT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.36917
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -42023.0
+  max_value: 0.0
+- name: AMT_CREDIT_MAX_OVERDUE
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.655133
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 115987185.0
+- name: CNT_CREDIT_PROLONG
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  min_value: 0.0
+  max_value: 9.0
+- name: AMT_CREDIT_SUM
+  dtype: float64
+  nullable: true
+  null_rate_reference: 8.0e-06
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 585000000.0
+- name: AMT_CREDIT_SUM_DEBT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.150119
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -4705600.32
+  max_value: 170100000.0
+- name: AMT_CREDIT_SUM_LIMIT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.344774
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -586406.115
+  max_value: 4705600.32
+- name: AMT_CREDIT_SUM_OVERDUE
+  dtype: float64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 3756681.0
+- name: CREDIT_TYPE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Another type of loan
+  - Car loan
+  - Cash loan (non-earmarked)
+  - Consumer credit
+  - Credit card
+  - Interbank credit
+  - Loan for business development
+  - Loan for purchase of shares (margin lending)
+  - Loan for the purchase of equipment
+  - Loan for working capital replenishment
+  - Microloan
+  - Mobile operator loan
+  - Mortgage
+  - Real estate loan
+  - Unknown type of loan
+  min_value: null
+  max_value: null
+- name: DAYS_CREDIT_UPDATE
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -41947.0
+  max_value: 372.0
+- name: AMT_ANNUITY
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.714735
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 118453423.5

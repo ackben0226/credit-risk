@@ -1,0 +1,41 @@
+name: bureau_balance
+filename: bureau_balance.csv
+primary_key: null
+row_count_reference: 27299925
+row_count_tolerance: 0.02
+columns:
+- name: SK_ID_BUREAU
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 5001709.0
+  max_value: 6842888.0
+- name: MONTHS_BALANCE
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -96.0
+  max_value: 0.0
+- name: STATUS
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - '0'
+  - '1'
+  - '2'
+  - '3'
+  - '4'
+  - '5'
+  - C
+  - X
+  min_value: null
+  max_value: null

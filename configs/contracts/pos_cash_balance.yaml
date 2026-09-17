@@ -1,0 +1,87 @@
+name: pos_cash_balance
+filename: POS_CASH_balance.csv
+primary_key: null
+row_count_reference: 10001358
+row_count_tolerance: 0.02
+columns:
+- name: SK_ID_PREV
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 1000001.0
+  max_value: 2843499.0
+- name: SK_ID_CURR
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 100001.0
+  max_value: 456255.0
+- name: MONTHS_BALANCE
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -96.0
+  max_value: -1.0
+- name: CNT_INSTALMENT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.002607
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 1.0
+  max_value: 92.0
+- name: CNT_INSTALMENT_FUTURE
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.002608
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 85.0
+- name: NAME_CONTRACT_STATUS
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Active
+  - Amortized debt
+  - Approved
+  - Canceled
+  - Completed
+  - Demand
+  - Returned to the store
+  - Signed
+  - XNA
+  min_value: null
+  max_value: null
+- name: SK_DPD
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 4231.0
+- name: SK_DPD_DEF
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 3595.0

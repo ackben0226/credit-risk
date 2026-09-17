@@ -1,0 +1,584 @@
+name: previous_application
+filename: previous_application.csv
+primary_key: SK_ID_PREV
+row_count_reference: 1670214
+row_count_tolerance: 0.02
+columns:
+- name: SK_ID_PREV
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: true
+  allowed_values: null
+  min_value: 1000001.0
+  max_value: 2845382.0
+- name: SK_ID_CURR
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 100001.0
+  max_value: 456255.0
+- name: NAME_CONTRACT_TYPE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Cash loans
+  - Consumer loans
+  - Revolving loans
+  - XNA
+  min_value: null
+  max_value: null
+- name: AMT_ANNUITY
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.222867
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 418058.145
+- name: AMT_APPLICATION
+  dtype: float64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 6905160.0
+- name: AMT_CREDIT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 1.0e-06
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 6905160.0
+- name: AMT_DOWN_PAYMENT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.536365
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -0.9
+  max_value: 3060045.0
+- name: AMT_GOODS_PRICE
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.230818
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0
+  max_value: 6905160.0
+- name: WEEKDAY_APPR_PROCESS_START
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - FRIDAY
+  - MONDAY
+  - SATURDAY
+  - SUNDAY
+  - THURSDAY
+  - TUESDAY
+  - WEDNESDAY
+  min_value: null
+  max_value: null
+- name: HOUR_APPR_PROCESS_START
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - 0
+  - 1
+  - 2
+  - 3
+  - 4
+  - 5
+  - 6
+  - 7
+  - 8
+  - 9
+  - 10
+  - 11
+  - 12
+  - 13
+  - 14
+  - 15
+  - 16
+  - 17
+  - 18
+  - 19
+  - 20
+  - 21
+  - 22
+  - 23
+  min_value: 0.0
+  max_value: 23.0
+- name: FLAG_LAST_APPL_PER_CONTRACT
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - N
+  - Y
+  min_value: null
+  max_value: null
+- name: NFLAG_LAST_APPL_IN_DAY
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - 0
+  - 1
+  min_value: 0.0
+  max_value: 1.0
+- name: RATE_DOWN_PAYMENT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.536365
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -1.4978763414307848e-05
+  max_value: 1.0
+- name: RATE_INTEREST_PRIMARY
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.996437
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: 0.0347812535418791
+  max_value: 1.0
+- name: RATE_INTEREST_PRIVILEGED
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.996437
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - 0.3731501057082452
+  - 0.4244186046511628
+  - 0.4365750528541226
+  - 0.4841437632135306
+  - 0.5021141649048626
+  - 0.5137420718816067
+  - 0.5428118393234672
+  - 0.5480972515856236
+  - 0.5687103594080338
+  - 0.6374207188160677
+  - 0.6379492600422833
+  - 0.6448202959830867
+  - 0.715644820295983
+  - 0.7251585623678646
+  - 0.7806553911205074
+  - 0.7906976744186047
+  - 0.806553911205074
+  - 0.8208245243128963
+  - 0.8324524312896405
+  - 0.8350951374207188
+  - 0.8451374207188159
+  - 0.852536997885835
+  - 0.8546511627906977
+  - 0.8673361522198731
+  - 1.0
+  min_value: 0.3731501057082452
+  max_value: 1.0
+- name: NAME_CASH_LOAN_PURPOSE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Building a house or an annex
+  - Business development
+  - Buying a garage
+  - Buying a holiday home / land
+  - Buying a home
+  - Buying a new car
+  - Buying a used car
+  - Car repairs
+  - Education
+  - Everyday expenses
+  - Furniture
+  - Gasification / water supply
+  - Hobby
+  - Journey
+  - Medicine
+  - Money for a third person
+  - Other
+  - Payments on other loans
+  - Purchase of electronic equipment
+  - Refusal to name the goal
+  - Repairs
+  - Urgent needs
+  - Wedding / gift / holiday
+  - XAP
+  - XNA
+  min_value: null
+  max_value: null
+- name: NAME_CONTRACT_STATUS
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Approved
+  - Canceled
+  - Refused
+  - Unused offer
+  min_value: null
+  max_value: null
+- name: DAYS_DECISION
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -2922.0
+  max_value: -1.0
+- name: NAME_PAYMENT_TYPE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Cash through the bank
+  - Cashless from the account of the employer
+  - Non-cash from your account
+  - XNA
+  min_value: null
+  max_value: null
+- name: CODE_REJECT_REASON
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - CLIENT
+  - HC
+  - LIMIT
+  - SCO
+  - SCOFR
+  - SYSTEM
+  - VERIF
+  - XAP
+  - XNA
+  min_value: null
+  max_value: null
+- name: NAME_TYPE_SUITE
+  dtype: object
+  nullable: true
+  null_rate_reference: 0.491198
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Children
+  - Family
+  - Group of people
+  - Other_A
+  - Other_B
+  - Spouse, partner
+  - Unaccompanied
+  min_value: null
+  max_value: null
+- name: NAME_CLIENT_TYPE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - New
+  - Refreshed
+  - Repeater
+  - XNA
+  min_value: null
+  max_value: null
+- name: NAME_GOODS_CATEGORY
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Additional Service
+  - Animals
+  - Audio/Video
+  - Auto Accessories
+  - Clothing and Accessories
+  - Computers
+  - Construction Materials
+  - Consumer Electronics
+  - Direct Sales
+  - Education
+  - Fitness
+  - Furniture
+  - Gardening
+  - Homewares
+  - House Construction
+  - Insurance
+  - Jewelry
+  - Medical Supplies
+  - Medicine
+  - Mobile
+  - Office Appliances
+  - Other
+  - Photo / Cinema Equipment
+  - Sport and Leisure
+  - Tourism
+  - Vehicles
+  - Weapon
+  - XNA
+  min_value: null
+  max_value: null
+- name: NAME_PORTFOLIO
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Cards
+  - Cars
+  - Cash
+  - POS
+  - XNA
+  min_value: null
+  max_value: null
+- name: NAME_PRODUCT_TYPE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - XNA
+  - walk-in
+  - x-sell
+  min_value: null
+  max_value: null
+- name: CHANNEL_TYPE
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - AP+ (Cash loan)
+  - Car dealer
+  - Channel of corporate sales
+  - Contact center
+  - Country-wide
+  - Credit and cash offices
+  - Regional / Local
+  - Stone
+  min_value: null
+  max_value: null
+- name: SELLERPLACE_AREA
+  dtype: int64
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -1.0
+  max_value: 4000000.0
+- name: NAME_SELLER_INDUSTRY
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Auto technology
+  - Clothing
+  - Connectivity
+  - Construction
+  - Consumer electronics
+  - Furniture
+  - Industry
+  - Jewelry
+  - MLM partners
+  - Tourism
+  - XNA
+  min_value: null
+  max_value: null
+- name: CNT_PAYMENT
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.222864
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - 0.0
+  - 3.0
+  - 4.0
+  - 5.0
+  - 6.0
+  - 7.0
+  - 8.0
+  - 9.0
+  - 10.0
+  - 11.0
+  - 12.0
+  - 13.0
+  - 14.0
+  - 15.0
+  - 16.0
+  - 17.0
+  - 18.0
+  - 19.0
+  - 20.0
+  - 21.0
+  - 22.0
+  - 23.0
+  - 24.0
+  - 26.0
+  - 28.0
+  - 29.0
+  - 30.0
+  - 32.0
+  - 33.0
+  - 34.0
+  - 35.0
+  - 36.0
+  - 38.0
+  - 39.0
+  - 40.0
+  - 41.0
+  - 42.0
+  - 44.0
+  - 45.0
+  - 46.0
+  - 47.0
+  - 48.0
+  - 53.0
+  - 54.0
+  - 59.0
+  - 60.0
+  - 66.0
+  - 72.0
+  - 84.0
+  min_value: 0.0
+  max_value: 84.0
+- name: NAME_YIELD_GROUP
+  dtype: object
+  nullable: false
+  null_rate_reference: 0.0
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - XNA
+  - high
+  - low_action
+  - low_normal
+  - middle
+  min_value: null
+  max_value: null
+- name: PRODUCT_COMBINATION
+  dtype: object
+  nullable: true
+  null_rate_reference: 0.000207
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - Card Street
+  - Card X-Sell
+  - Cash
+  - 'Cash Street: high'
+  - 'Cash Street: low'
+  - 'Cash Street: middle'
+  - 'Cash X-Sell: high'
+  - 'Cash X-Sell: low'
+  - 'Cash X-Sell: middle'
+  - POS household with interest
+  - POS household without interest
+  - POS industry with interest
+  - POS industry without interest
+  - POS mobile with interest
+  - POS mobile without interest
+  - POS other with interest
+  - POS others without interest
+  min_value: null
+  max_value: null
+- name: DAYS_FIRST_DRAWING
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.402981
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -2922.0
+  max_value: 365243.0
+- name: DAYS_FIRST_DUE
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.402981
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -2892.0
+  max_value: 365243.0
+- name: DAYS_LAST_DUE_1ST_VERSION
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.402981
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -2801.0
+  max_value: 365243.0
+- name: DAYS_LAST_DUE
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.402981
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -2889.0
+  max_value: 365243.0
+- name: DAYS_TERMINATION
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.402981
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values: null
+  min_value: -2874.0
+  max_value: 365243.0
+- name: NFLAG_INSURED_ON_APPROVAL
+  dtype: float64
+  nullable: true
+  null_rate_reference: 0.402981
+  null_rate_tolerance: 0.02
+  is_unique: false
+  allowed_values:
+  - 0.0
+  - 1.0
+  min_value: 0.0
+  max_value: 1.0

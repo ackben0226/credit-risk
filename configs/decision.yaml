@@ -1,0 +1,70 @@
+# Decision Engine Configuration
+#
+# This file governs how calibrated PD is converted into a business
+# decision (APPROVE / REFER / DECLINE). It is a governance artifact:
+# changes are reviewable, version-controlled, and diffable.
+#
+# Cost parameters:
+#   C_FN  Cost of approving a defaulter (false negative in risk terms)
+#   C_FP  Cost of rejecting a good applicant (false positive)
+# The ratio C_FN / C_FP determines the cost-optimal threshold.
+#
+# Thresholds:
+#   approve_max   PD below this → APPROVE
+#   review_max    PD between approve_max and review_max → REFER
+#   PD at or above review_max → DECLINE
+#
+# Segment overrides:
+#   Per-segment thresholds that supersede the defaults.
+#   Segments not listed fall back to defaults.
+#
+# Policy overrides:
+#   Non-PD-based rules that force a decision regardless of the model output.
+#   These supersede all threshold logic.
+
+version: "1.0.0"
+effective_date: "2026-09-18"
+
+costs:
+  C_FN: 20.0      # cost of approving a defaulter, relative units
+  C_FP: 1.0       # cost of rejecting a good applicant
+
+thresholds:
+  approve_max: 0.040      # cost-optimal at C_FN/C_FP = 20
+  review_max: 0.200       # manual review for the middle band
+
+# Add a named alternative policy for demonstration
+policies:
+  conservative:
+    approve_max: 0.085
+    review_max: 0.200
+    note: "Overrides cost-optimal to match risk appetite constraints"
+
+segments:
+  default:
+    approve_max: 0.085
+    review_max: 0.200
+  new_customer:
+    approve_max: 0.060    # stricter for applicants with no relationship
+    review_max: 0.150
+  existing_customer:
+    approve_max: 0.100    # more lenient for known customers
+    review_max: 0.220
+
+policy_overrides:
+  sanctions_list:
+    force_decision: DECLINE
+    reason: "Applicant appears on sanctions list"
+  internal_blacklist:
+    force_decision: DECLINE
+    reason: "Applicant is on internal blacklist"
+  fraud_flag:
+    force_decision: DECLINE
+    reason: "Application flagged as potential fraud"
+  vip_customer:
+    force_decision: APPROVE
+    reason: "Pre-approved VIP customer"
+
+model:
+  default_model: challenger
+  version: "0.1.0"

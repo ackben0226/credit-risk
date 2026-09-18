@@ -1,0 +1,119 @@
+# Reason code configuration.
+#
+# Maps raw feature names to structured, human-readable adverse-action
+# reason codes. Used to generate compliant notices for declined applicants.
+#
+# Each entry has:
+#   code:         Structured code for logging and downstream routing
+#   description:  Human-readable text for the adverse-action notice
+#   threshold:    (Optional) feature value beyond which this reason fires
+#   direction:    positive | negative
+#                 positive = higher feature value triggers the reason
+#                 negative = lower feature value triggers the reason
+#
+# The engine checks each reason's condition against the applicant's
+# features. If multiple fire, the top K by absolute contribution are
+# returned, ordered by importance.
+
+version: "1.0.0"
+
+reasons:
+  EXT_SOURCE_1:
+    code: LOW_EXTERNAL_SCORE_1
+    description: "Low score from external credit source 1"
+    direction: negative
+
+  EXT_SOURCE_2:
+    code: LOW_EXTERNAL_SCORE_2
+    description: "Low score from external credit source 2"
+    direction: negative
+
+  EXT_SOURCE_3:
+    code: LOW_EXTERNAL_SCORE_3
+    description: "Low score from external credit source 3"
+    direction: negative
+
+  bureau_credit_sum_overdue_max:
+    code: HIGH_BUREAU_OVERDUE
+    description: "High maximum overdue amount on credit bureau records"
+    direction: positive
+
+  bureau_count_bad_debt:
+    code: PRIOR_BAD_DEBT
+    description: "Prior bad-debt record in credit bureau history"
+    direction: positive
+
+  bureau_count_credits:
+    code: HIGH_CREDIT_COUNT
+    description: "Large number of existing credit accounts"
+    direction: positive
+
+  inst_delay_positive_rate:
+    code: RECENT_LATE_PAYMENTS
+    description: "History of late installment payments"
+    direction: positive
+
+  inst_delay_max:
+    code: HIGH_MAX_PAYMENT_DELAY
+    description: "Significant maximum delay on prior loan installments"
+    direction: positive
+
+  inst_underpaid_rate:
+    code: UNDERPAID_INSTALLMENTS
+    description: "History of underpaid installment amounts"
+    direction: positive
+
+  pos_sk_dpd_max:
+    code: POS_CASH_DPD
+    description: "Days past due on prior POS or cash loans"
+    direction: positive
+
+  cc_sk_dpd_max:
+    code: CREDIT_CARD_DPD
+    description: "Days past due on credit card accounts"
+    direction: positive
+
+  cc_utilization_last:
+    code: HIGH_CREDIT_UTILIZATION
+    description: "High utilization of credit card limit"
+    direction: positive
+
+  bb_max_status_max:
+    code: BUREAU_BALANCE_DELINQUENCY
+    description: "Delinquency in bureau balance history"
+    direction: positive
+
+  DAYS_BIRTH:
+    code: SHORT_CREDIT_HISTORY
+    description: "Limited credit history based on applicant age"
+    direction: positive  # higher = older (but young age is the concern)
+
+  AMT_CREDIT:
+    code: HIGH_LOAN_AMOUNT
+    description: "Requested loan amount relative to income"
+    direction: positive
+
+  AMT_INCOME_TOTAL:
+    code: LOW_INCOME
+    description: "Reported income below threshold"
+    direction: negative
+
+  DAYS_EMPLOYED:
+    code: SHORT_EMPLOYMENT_TENURE
+    description: "Limited employment history"
+    direction: positive
+
+  prev_refusal_rate:
+    code: PRIOR_APPLICATION_REFUSALS
+    description: "High rate of prior application refusals"
+    direction: positive
+
+  prev_count_refused:
+    code: MULTIPLE_PRIOR_REFUSALS
+    description: "Multiple prior applications refused"
+    direction: positive
+
+  NAME_EDUCATION_TYPE:
+    code: EDUCATION_PROFILE
+    description: "Education profile contributes to risk assessment"
+    direction: positive

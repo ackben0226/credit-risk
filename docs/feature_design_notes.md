@@ -228,3 +228,29 @@ Verified via `.min()` = 0 for every categorical column across all
 splits. Because the split is random (not temporal), the population is
 homogeneous — rare categories appear in all splits proportionally.
 This is expected and simplifies downstream categorical handling.
+
+## Monitoring design
+
+### Decision: reference split is VAL, not TRAIN
+
+**Date:** 2026-09-18
+
+The monitoring module compares a reference population against a
+monitoring population. The initial configuration used the train split
+as reference, which produced a spurious "AUC dropped by 7.5 pp" warning.
+
+**Root cause:** train AUC (0.8597) is inflated by overfitting. Comparing
+it against holdout AUC (0.7846) measures overfitting, not drift. AUC
+drift is only meaningful when the reference is a held-out set that the
+model was not trained on.
+
+**Fix:** reference_split is now "val" (0.7881), which is a genuine
+held-out population from the same time period as holdout. Any future
+AUC drop on this comparison reflects real distribution or concept
+drift, not memorization.
+
+**General principle:** for performance-based drift comparisons, the
+reference must be a population the model has not been trained on.
+For feature-distribution-based drift (PSI), training data is
+acceptable as reference because distributions are not affected by
+model overfitting.

@@ -1,0 +1,39 @@
+# Monitoring configuration for drift detection.
+#
+# Defines reference distributions, alert thresholds, and the metrics
+# computed on each monitoring run. Changes here affect the sensitivity
+# of drift alerts and should be reviewed by the model owner.
+
+version: "1.0.0"
+effective_date: "2026-09-18"
+
+# Reference and monitoring populations
+populations:
+  reference_split: "val"       # baseline: data the model was fit on
+  monitoring_split: "holdout"    # current: data to compare against baseline
+
+# PSI thresholds (interpretation guidelines)
+psi:
+  stable_max: 0.10               # below this: stable
+  moderate_max: 0.25             # between stable_max and this: investigate
+                                 # above moderate_max: material drift
+# KS threshold for distribution shift
+ks:
+  drift_threshold: 0.05          # if KS between reference and monitoring
+                                 # exceeds this, flag the feature
+
+# Calibration thresholds (from the model card)
+calibration:
+  slope_min: 0.90
+  slope_max: 1.10
+  intercept_abs_max: 0.15
+
+# Performance thresholds
+performance:
+  min_auc: 0.70                  # below this: investigate
+  max_auc_drop: 0.03             # drop vs reference AUC that triggers alert
+
+# Reporting
+reporting:
+  top_n_drifted: 20              # number of top drifted features to report
+  top_n_features_ranked_by: "psi"  # psi | ks

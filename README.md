@@ -318,90 +318,84 @@ split) <br/>against a monitoring population (holdout). Using the training
 <br/>documented and enforced.
 
 ## Technology Stack
-Category	Tools
-Language	Python 3.11+
-Data	pandas, numpy, pyarrow
-Modelling	scikit-learn, LightGBM, Optuna
-Binning	optbinning
-Explainability	SHAP
-API	FastAPI, Uvicorn, Pydantic v2
-Testing	pytest
-Containers	Docker, docker-compose
-Config	PyYAML
-Regulatory and Ethical Posture
-The system is designed with the following regulatory requirements in
-mind. This is a design alignment, not a compliance claim.
+|__Category__|	__Tools__|
+|:----:|:---:|
+|Language|	Python 3.11+|
+|Data	|pandas, numpy, pyarrow|
+|Modelling|	scikit-learn, LightGBM, Optuna|
+|Binning|	optbinning|
+|Explainability|	SHAP|
+|API|	FastAPI, Uvicorn, Pydantic v2|
+|Testing|	pytest|
+|Containers|	Docker, docker-compose|
+|Config|	PyYAML|
 
-Requirement	How addressed
-SR 11-7 (Fed model risk)	Model card, validation reports, champion/challenger governance
-ECOA / Reg B (US adverse action)	Structured reason codes with plain-language descriptions
-GDPR Art. 22 (EU automated decisions)	Meaningful information about the logic; right to human review stated in notices
-Basel IRB (capital)	PD estimates suitable as inputs; calibration documented
-IFRS 9 (provisioning)	Point-in-time PD; calibration and monitoring for ECL staging
-Not claimed:
+## Regulatory and Ethical Posture
+<br/>The system is designed with the following regulatory requirements in
+mind. <br/>This is a design alignment, not a compliance claim.
 
-Regulatory approval in any jurisdiction
+| Requirement | How addressed |
+| :--- | :--- |
+| **SR 11-7** (Fed model risk) | Model card, validation reports, champion/challenger governance |
+| **ECOA / Reg B** (US adverse action) | Structured reason codes with plain-language descriptions |
+| **GDPR Art. 22** (EU automated decisions) | Meaningful information about the logic; right to human review stated in notices |
+| **Basel IRB** (capital) | PD estimates suitable as inputs; calibration documented |
+**IFRS 9** (Provisioning) | Point‑in‑time PD; calibration and monitoring for ECL staging|
 
-Fitness for production deployment without independent validation
 
-That the Home Credit population represents any specific lending context
+## Not claimed:
 
-That fairness compliance has been certified (the dataset does not
-contain the protected attributes a complete assessment requires)
+- Regulatory approval in any jurisdiction
+- Fitness for production deployment without independent validation
+- That the Home Credit population represents any specific lending context
+- That fairness compliance has been certified (the dataset does not
+<br>contain the protected attributes a complete assessment requires)
 
-See docs/model_card.md §10 and §17 for the full
-limitations statement.
+See [docs/model_card.md](docs/model_card.md) &nbsp; §10 and §17 
+<br>for the full limitations statement.
 
-What This Project Does Not Include
+## What This Project Does Not Include
 Explicitly out of scope:
-
-Loss Given Default (LGD) modelling
-
-Exposure at Default (EAD) modelling
-
-Risk-based pricing engine
-
-Collections strategy
-
-Fraud detection
-
-Macroeconomic scenario generation
-
-Full IFRS 9 lifetime ECL engine
-
-Full Basel capital calculation
-
-Production customer data
-
-Legal or regulatory certification
+- Loss Given Default (LGD) modelling
+- Exposure at Default (EAD) modelling
+- Risk-based pricing engine
+- Collections strategy
+- Fraud detection
+- Macroeconomic scenario generation
+- Full IFRS 9 lifetime ECL engine
+- Full Basel capital calculation
+- Production customer data
+- Legal or regulatory certification
 
 The architecture provides interfaces for these capabilities but does
-not implement them.
+<br>not implement them.
 
-Verification
+## Verification
 Check	Result
-Schema validation on raw data	0 errors
-Champion holdout AUC	0.7722
-Challenger holdout AUC	0.7846
-API tests	7 / 7 passing
-End-to-end scoring via API	Verified on live requests
-Adverse-action notice rendering	Verified on high-risk applicant
-Policy override behaviour	Verified (sanctions list → DECLINE)
-License
+| Schema validation on raw data |	0 errors |
+|:----:|:----:|
+|Champion holdout AUC|	0.7722|
+|Challenger holdout AUC|	0.7846|
+|API tests	|7 / 7 passing|
+|End-to-end scoring via API|	Verified on live requests|
+|Adverse-action notice rendering|	Verified on high-risk applicant|
+|Policy override behaviour	|Verified (sanctions list → DECLINE)|
+
+## License
 The code in this repository is released under the MIT License. The Home
-Credit Default Risk dataset is subject to its own licensing terms; see
-the Kaggle competition page.
+<br>Credit Default Risk dataset is subject to its own licensing terms; see
+<br>the Kaggle competition page.
 
-Author
+## Author
 Benjamin Ackah — ML Engineering / Data Science
-GitHub: @ackben0226
+<br>GitHub: [@ackben0226](https://github.com/ackben0226)
 
-Built as a reference implementation of a production-grade credit risk
-PD system. Every quantitative claim in the documentation is traceable
-to an artifact on disk, and every pipeline stage is reproducible from
-the raw CSVs.
+_Built as a reference implementation of a production-grade credit risk
+<br>PD system. Every quantitative claim in the documentation is traceable
+<br>to an artifact on disk, and every pipeline stage is reproducible from
+<br>the raw CSVs._
 
-text
+```text
 
 ---
 
@@ -447,18 +441,19 @@ dev = [
     "ruff>=0.7",
     "mypy>=1.12",
 ]
-Or change the README to pip install -e . and add the dev tools
-separately.
+```
+Or change the README to `pip install -e .` and add the dev tools
+<br>separately.
 
-The dataset download command
-The kaggle competitions download command requires the Kaggle CLI
-and API credentials (~/.kaggle/kaggle.json). If a reader doesn't
-have that configured, the manual download from the Kaggle website
-works too. The README says "Download from Kaggle" but only shows the
-CLI form; consider adding a note about the manual option.
+### The dataset download command
+The `kaggle competitions download` command requires the Kaggle CLI
+<br>and API credentials `(~/.kaggle/kaggle.json)`. If a reader doesn't
+<br>have that configured, the manual download from the Kaggle website
+<br>works too. The README says "Download from Kaggle" but only shows the
+<br>CLI form; consider adding a note about the manual option.
 
-Commit and Push
-powershell
+### Commit and Push
+```powershell
 cd C:\credit_risk
 
 git add README.md
@@ -476,3 +471,4 @@ git commit -m "Rewrite README with full project overview
 - Out-of-scope list
 - Verification results"
 git push
+```

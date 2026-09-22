@@ -254,3 +254,30 @@ reference must be a population the model has not been trained on.
 For feature-distribution-based drift (PSI), training data is
 acceptable as reference because distributions are not affected by
 model overfitting.
+
+## API verification
+
+**Date:** 2026-09-22
+
+All 7 API endpoints verified end-to-end with pytest:
+
+- test_health PASSED
+- test_readiness PASSED
+- test_model_info PASSED
+- test_score PASSED
+- test_score_rejects_missing_fields PASSED
+- test_explain PASSED
+- test_report PASSED
+
+7 passed in 7.51s.
+
+Manual verification also confirmed:
+- /score returns PD=0.0066 for a low-risk applicant → APPROVE
+- /score with policy_flags={"sanctions_list": true} → DECLINE
+- /explain on the highest-PD applicant returns top SHAP
+  contributions and mapped reason codes
+- /report renders the full adverse-action notice text
+
+Train-serving skew was encountered during API development: JSON
+nulls produce object-dtype columns, which LightGBM rejects.
+Fixed by explicit .astype("float64") at the serving boundary.

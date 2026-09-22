@@ -31,7 +31,7 @@ notices.
 ## What the System Does
 <p align="center">
   <img
-    src="./architecture.drawio.svg"
+    src="./architecture.drawio (1).svg"
     alt="Home Credit Probability of Default Modelling Pipeline"
     width="100%"
   />

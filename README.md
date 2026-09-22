@@ -29,7 +29,21 @@ notices.
 ---
 
 ## What the System Does
+<p align="center">
+  <img
+    src="./architecture.drawio.svg"
+    alt="Home Credit Probability of Default Modelling Pipeline"
+    width="100%"
+  />
+</p>
 
+<p align="center">
+  <em>End-to-end production-oriented Probability of Default modelling architecture.</em>
+</p>
+
+### Interactive Diagram
+
+[Open the editable diagrams.net architecture](./home_credit_pd_pipeline.drawio)
 
 
 ## Documents

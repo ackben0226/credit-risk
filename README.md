@@ -132,3 +132,347 @@ python scripts/run_monitoring.py       # ~10 sec — drift detection
 python scripts/run_decision_demo.py    # ~10 sec — decision distribution
 python scripts/run_explainability.py   # ~30 sec — SHAP + reason codes
 ```
+
+Serve the API
+```bash
+python scripts/run_api_server.py
+```
+Then in another terminal:
+
+```bash
+curl http://localhost:8000/health
+curl http://localhost:8000/readiness
+curl http://localhost:8000/model-info
+```
+Interactive docs: http://localhost:8000/docs
+
+Example score request:
+
+```bash
+curl -X POST http://localhost:8000/score \
+  -H "Content-Type: application/json" \
+  -d '{
+    "applicant_id": "demo_001",
+    "features": {"EXT_SOURCE_2": 0.72, "EXT_SOURCE_3": 0.68, ...},
+    "segment": "default"
+  }'
+```
+Response:
+
+```json
+{
+  "applicant_id": "demo_001",
+  "pd": 0.0066,
+  "decision": "APPROVE",
+  "threshold_used": 0.04,
+  "segment": "default",
+  "override_applied": null,
+  "expected_cost": 0.131,
+  "model": "challenger",
+  "model_version": "0.1.0",
+  "config_version": "1.0.0",
+  "decided_at": "2026-09-22T01:17:16Z"
+}
+```
+
+Run the tests
+
+```bash
+pytest tests/test_api.py -v
+```
+Expected: 7 passed.
+
+Docker
+```bash
+docker build -t credit-risk-api:0.1.0 .
+docker run --rm -p 8000:8000 credit-risk-api:0.1.0
+```
+Or with compose:
+
+```bash
+docker compose up
+```
+Project Structure
+```text
+credit_risk/
+├── src/credit_risk/
+│   ├── data/                       Ingestion, validation
+│   │   ├── ingest.py
+│   │   └── validate.py
+│   ├── features/                   Feature engineering
+│   │   ├── aggregations/           5 relational family aggregators
+│   │   ├── assembly.py             Join aggregations onto application table
+│   │   ├── binning.py              WoE + IV with monotonicity constraints
+│   │   ├── splits.py               Deterministic 70/15/15
+│   │   └── store.py                Challenger feature store
+│   ├── models/                     Training and evaluation
+│   │   ├── champion.py             Elastic-Net LR scorecard
+│   │   ├── challenger.py           LightGBM + Optuna
+│   │   ├── calibrate.py            Isotonic / Platt calibration
+│   │   └── evaluate.py             Champion vs challenger comparison
+│   ├── decision/                   Decision engine
+│   │   └── engine.py               APPROVE / REFER / DECLINE
+│   ├── explainability/             SHAP and reason codes
+│   │   ├── shap_analysis.py
+│   │   └── reason_codes.py
+│   ├── monitoring/                 Drift detection
+│   │   └── drift.py                PSI, KS, calibration drift
+│   └── api/                        FastAPI service
+│       ├── main.py
+│       └── schemas.py
+├── scripts/                        Runnable pipeline entry points
+├── configs/
+│   ├── contracts/                  Generated schema contracts (8 tables, 6 joins)
+│   ├── data_config.yaml
+│   ├── decision.yaml               Decision thresholds, policy overrides
+│   ├── monitoring_config.yaml      Drift thresholds
+│   └── reason_codes.yaml           Feature → reason code mapping
+├── docs/
+│   ├── problem_statement.md
+│   ├── model_card.md
+│   ├── data_quality_report.md
+│   ├── champion_challenger.md
+│   ├── stakeholder_brief.md
+│   └── feature_design_notes.md
+├── tests/
+│   └── test_api.py                 7 API tests, all passing
+├── data/                           (gitignored)
+│   ├── raw/home_credit/
+│   ├── interim/
+│   └── processed/
+├── artifacts/                      (gitignored)
+│   ├── models/
+│   ├── calibrators/
+│   ├── binning/
+│   └── reports/
+├── Dockerfile
+├── docker-compose.yml
+├── pyproject.toml
+└── README.md
+```
+
+## Design Highlights
+### Data contracts, not assumptions
+Every table and column has a declared contract in
+`configs/contracts/`. 
+<br/>Contracts are __generated__ from a full-data
+inspection, not hand-typed. 
+<br/>If the raw data changes, re-running
+inspection produces a diff for review.
+
+Validation runs on every ingestion. If the data doesn't match the
+<br/>contract, ingestion fails loudly — no silent corruption.
+
+### Leakage discipline, enforced
+Every fitted transformation — imputation, binning, WoE encoding,
+<br/>categorical factorization, calibration — is fitted on the development
+<br/>split only. The holdout is touched exactly once, for final evaluation.
+
+This is enforced by the pipeline structure, not by convention.
+
+### Two models, one decision
+The champion and challenger produce calibrated PD through different
+paths:
+
+- **Champion:** WoE-encoded features → Elastic-Net logistic regression.
+<br/>Naturally calibrated. Interpretable coefficients. 180 features.
+
+- **Challenger:** raw-encoded features → LightGBM. Needs post-hoc
+<br/>isotonic calibration. 362 features, 1,486 trees.
+
+Both feed the same decision engine. The comparison report recommends
+<br/>the challenger as primary (better discrimination and cost), with the
+<br/>champion retained for regulatory and latency-critical scenarios.
+
+### Explainability that satisfies regulators
+Three layers:
+
+1. __Global SHAP__ for the challenger; coefficients for the champion.
+2. __Local SHAP per applicant__ with signed contributions.
+3. __Deterministic reason codes__ mapping features to human-readable
+<br/>adverse-action reasons via configs/reason_codes.yaml.
+
+The reason code layer is deliberately separate from SHAP — a
+<br/>regulator-friendly mapping layer that produces stable, auditable output
+<br/>independent of the underlying model.
+
+Decision engine separated from model
+The threshold is a business decision, not a model output. It lives in
+<br/>`configs/decision.yaml:`
+
+```yaml
+costs:
+  C_FN: 20.0
+  C_FP: 1.0
+thresholds:
+  approve_max: 0.040
+  review_max: 0.200
+```
+Change the cost parameters, change the threshold, no retraining required.
+
+### Monitoring with the right reference population
+Drift detection compares a held-out reference population (val
+split) <br/>against a monitoring population (holdout). Using the training
+<br/>split as reference would inflate AUC comparisons because training
+<br/>performance reflects overfitting, not drift. This distinction is
+<br/>documented and enforced.
+
+## Technology Stack
+Category	Tools
+Language	Python 3.11+
+Data	pandas, numpy, pyarrow
+Modelling	scikit-learn, LightGBM, Optuna
+Binning	optbinning
+Explainability	SHAP
+API	FastAPI, Uvicorn, Pydantic v2
+Testing	pytest
+Containers	Docker, docker-compose
+Config	PyYAML
+Regulatory and Ethical Posture
+The system is designed with the following regulatory requirements in
+mind. This is a design alignment, not a compliance claim.
+
+Requirement	How addressed
+SR 11-7 (Fed model risk)	Model card, validation reports, champion/challenger governance
+ECOA / Reg B (US adverse action)	Structured reason codes with plain-language descriptions
+GDPR Art. 22 (EU automated decisions)	Meaningful information about the logic; right to human review stated in notices
+Basel IRB (capital)	PD estimates suitable as inputs; calibration documented
+IFRS 9 (provisioning)	Point-in-time PD; calibration and monitoring for ECL staging
+Not claimed:
+
+Regulatory approval in any jurisdiction
+
+Fitness for production deployment without independent validation
+
+That the Home Credit population represents any specific lending context
+
+That fairness compliance has been certified (the dataset does not
+contain the protected attributes a complete assessment requires)
+
+See docs/model_card.md §10 and §17 for the full
+limitations statement.
+
+What This Project Does Not Include
+Explicitly out of scope:
+
+Loss Given Default (LGD) modelling
+
+Exposure at Default (EAD) modelling
+
+Risk-based pricing engine
+
+Collections strategy
+
+Fraud detection
+
+Macroeconomic scenario generation
+
+Full IFRS 9 lifetime ECL engine
+
+Full Basel capital calculation
+
+Production customer data
+
+Legal or regulatory certification
+
+The architecture provides interfaces for these capabilities but does
+not implement them.
+
+Verification
+Check	Result
+Schema validation on raw data	0 errors
+Champion holdout AUC	0.7722
+Challenger holdout AUC	0.7846
+API tests	7 / 7 passing
+End-to-end scoring via API	Verified on live requests
+Adverse-action notice rendering	Verified on high-risk applicant
+Policy override behaviour	Verified (sanctions list → DECLINE)
+License
+The code in this repository is released under the MIT License. The Home
+Credit Default Risk dataset is subject to its own licensing terms; see
+the Kaggle competition page.
+
+Author
+Benjamin Ackah — ML Engineering / Data Science
+GitHub: @ackben0226
+
+Built as a reference implementation of a production-grade credit risk
+PD system. Every quantitative claim in the documentation is traceable
+to an artifact on disk, and every pipeline stage is reproducible from
+the raw CSVs.
+
+text
+
+---
+
+## What This README Does
+
+The README is the entry point. It should answer three questions in the
+first 30 seconds:
+
+1. **What is this?** A production-grade credit risk PD system.
+2. **What does it do?** Estimate PD, decide, explain, monitor.
+3. **How do I use it?** Install, run pipeline, serve API, run tests.
+
+It should then let a deeper reader drill into any layer:
+
+- **Non-technical:** stakeholder brief
+- **Risk manager:** model card, champion/challenger comparison
+- **ML engineer:** source code, design notes
+- **Regulator:** model card, problem statement, data quality report
+- **Reviewer:** tests, verification results, project structure
+
+Every claim links to an artifact on disk. Every number is real.
+
+---
+
+## Small Notes
+
+### The repository URL
+
+I've included `https://github.com/ackben0226/credit-risk` in the clone
+command and the author section. If you push the repo under a different
+name, update both.
+
+### The `pyproject.toml` reference
+
+The README mentions `pip install -e ".[dev]"`. This requires a `[dev]`
+extras section in `pyproject.toml`. If yours doesn't have one yet, add:
+
+```toml
+[project.optional-dependencies]
+dev = [
+    "pytest>=8.3",
+    "httpx>=0.27",
+    "ruff>=0.7",
+    "mypy>=1.12",
+]
+Or change the README to pip install -e . and add the dev tools
+separately.
+
+The dataset download command
+The kaggle competitions download command requires the Kaggle CLI
+and API credentials (~/.kaggle/kaggle.json). If a reader doesn't
+have that configured, the manual download from the Kaggle website
+works too. The README says "Download from Kaggle" but only shows the
+CLI form; consider adding a note about the manual option.
+
+Commit and Push
+powershell
+cd C:\credit_risk
+
+git add README.md
+git commit -m "Rewrite README with full project overview
+
+- Lead with key results (champion/challenger AUC, cost impact)
+- Explain what the system does and why it's not a classifier
+- Link to all documentation
+- Quick start: install, run pipeline, serve API, test
+- Full project structure
+- Design highlights: contracts, leakage, two-model architecture,
+  explainability, decision engine, monitoring
+- Technology stack
+- Regulatory posture (design alignment, not compliance claim)
+- Out-of-scope list
+- Verification results"
+git push

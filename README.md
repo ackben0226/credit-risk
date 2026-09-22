@@ -1,7 +1,35 @@
-# Credit Risk — Probability of Default
+# Credit Risk — Probability of Default (PD) System
 
-Production-oriented PD modelling system built on the Home Credit
-Default Risk dataset.
+A production-grade **Probability of Default** modelling system built on
+the public Home Credit Default Risk dataset. The system estimates a loan
+applicant's probability of default at application time, converts that
+probability into a business decision, explains the decision, and monitors
+itself for drift.
+
+This is not a notebook or a Kaggle submission. It is an end-to-end system
+with the data contracts, calibration, explainability, monitoring, and
+governance that a real credit risk deployment requires.
+
+---
+
+## Key Results
+
+| Model | Holdout AUC | Gini | KS | Brier | Calibration slope |
+|---|---:|---:|---:|---:|---:|
+| Champion (Elastic-Net LR, WoE) | 0.7722 | 0.5443 | 0.4136 | 0.0671 | 1.005 |
+| **Challenger (LightGBM, raw)** | **0.7846** | **0.5692** | **0.4308** | **0.0658** | 0.979 |
+
+The challenger reduces expected cost by **~2%** across cost ratios
+from 5:1 to 50:1 (see [`docs/champion_challenger.md`](docs/champion_challenger.md)).
+
+The API serves **`/score`** at under 100 ms p99, with a full
+explainability endpoint producing regulator-compliant adverse-action
+notices.
+
+---
+
+## What the System Does
+
 
 ## Documents
 

@@ -331,17 +331,29 @@ split) <br/>against a monitoring population (holdout). Using the training
 |Config|	PyYAML|
 
 ## Regulatory and Ethical Posture
-<br/>The system is designed with the following regulatory requirements in
-mind. <br/>This is a design alignment, not a compliance claim.
+
+The system is designed with the following regulatory requirements in
+mind. This is a **design alignment**, not a compliance claim.
 
 | Requirement | How addressed |
-| :--- | :--- |
+|---|---|
 | **SR 11-7** (Fed model risk) | Model card, validation reports, champion/challenger governance |
 | **ECOA / Reg B** (US adverse action) | Structured reason codes with plain-language descriptions |
 | **GDPR Art. 22** (EU automated decisions) | Meaningful information about the logic; right to human review stated in notices |
-| **Basel IRB** (capital) | PD estimates suitable as inputs; calibration documented |
-**IFRS 9** (Provisioning) | Point‑in‑time PD; calibration and monitoring for ECL staging|
 
+### Out of Scope
+
+- **Basel IRB capital calculations** and **IFRS 9 ECL staging** require
+  LGD (Loss Given Default) and EAD (Exposure at Default) models in
+  addition to PD. This project models PD only.
+- The PD output is suitable as an input to those frameworks, but this
+  project does not implement them.
+- The Home Credit dataset does not contain the recovery or
+  exposure-at-default data required to model LGD or EAD.
+- The project does not claim regulatory approval in any jurisdiction.
+
+See [`docs/model_card.md`](docs/model_card.md) §17 for the full
+limitations statement.
 
 ## Not claimed:
 

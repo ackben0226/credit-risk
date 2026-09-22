@@ -2,7 +2,7 @@
 
 A production-grade **Probability of Default** modelling system built on
 the public Home Credit Default Risk dataset. The system estimates a loan
-applicant's probability of default at application time, converts that
+applicant's probability of default at application time, converts that 
 probability into a business decision, explains the decision, and monitors
 itself for drift.
 

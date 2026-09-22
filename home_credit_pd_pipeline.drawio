@@ -1,0 +1,93 @@
+<mxfile host="app.diagrams.net" modified="2026-09-22T00:00:00.000Z" agent="ChatGPT" version="24.7.17">
+  <diagram id="credit-risk-pipeline" name="Credit Risk PD Pipeline">
+    <mxGraphModel dx="1400" dy="900" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100" math="0" shadow="0">
+      <root>
+        <mxCell id="0"/>
+        <mxCell id="1" parent="0"/>
+
+        <mxCell id="title" value="Home Credit Probability of Default (PD) Modelling Pipeline" style="text;html=1;fontSize=20;fontStyle=1;align=center;verticalAlign=middle;" vertex="1" parent="1">
+          <mxGeometry x="260" y="20" width="620" height="40" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="raw" value="Raw Home Credit CSVs&lt;br&gt;&lt;b&gt;8 relational tables&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="365" y="90" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="validation" value="Data Validation&lt;br&gt;&lt;b&gt;Schema contracts&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="200" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="aggregation" value="Relational Aggregation&lt;br&gt;&lt;b&gt;5 feature families → 237 features&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="310" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="assembly" value="Applicant-Level Matrix Assembly&lt;br&gt;&lt;b&gt;307,511 × 359&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="420" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="split" value="Deterministic Data Split&lt;br&gt;&lt;b&gt;70% Train / 15% Validation / 15% Test&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="530" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="champion" value="CHAMPION&lt;br&gt;&lt;b&gt;WoE Binning + IV Selection&lt;/b&gt;&lt;br&gt;Logistic Regression · 180 features" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="80" y="670" width="390" height="95" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="challenger" value="CHALLENGER&lt;br&gt;&lt;b&gt;Raw Encoding&lt;/b&gt;&lt;br&gt;LightGBM · 362 features" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="670" y="670" width="390" height="95" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="calibration" value="Post-hoc Calibration&lt;br&gt;&lt;b&gt;Isotonic calibration for challenger&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="820" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="decision" value="Decision Engine&lt;br&gt;&lt;b&gt;Cost-sensitive thresholds + policy overrides&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="930" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="outcome" value="Decision Outcome&lt;br&gt;&lt;b&gt;APPROVE / REFER / DECLINE&lt;/b&gt;&lt;br&gt;Audit trail" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="365" y="1040" width="410" height="75" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="explain" value="Explainability&lt;br&gt;&lt;b&gt;SHAP + structured reason codes&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="80" y="1160" width="390" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="adverse" value="Adverse-Action Notices&lt;br&gt;&lt;b&gt;ECOA / GDPR Art. 22 aligned&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=13;" vertex="1" parent="1">
+          <mxGeometry x="670" y="1160" width="390" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="monitor" value="Drift &amp; Performance Monitoring&lt;br&gt;&lt;b&gt;PSI · KS · Calibration&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=14;" vertex="1" parent="1">
+          <mxGeometry x="365" y="1270" width="410" height="70" as="geometry"/>
+        </mxCell>
+
+        <mxCell id="api" value="FastAPI Service&lt;br&gt;&lt;b&gt;Dockerized Production Deployment&lt;/b&gt;" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=14;fontStyle=1;" vertex="1" parent="1">
+          <mxGeometry x="365" y="1380" width="410" height="75" as="geometry"/>
+        </mxCell>
+
+        <!-- Main flow -->
+        <mxCell id="e1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="raw" target="validation"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="validation" target="aggregation"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="aggregation" target="assembly"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="assembly" target="split"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Split to models -->
+        <mxCell id="e5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="split" target="champion"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="split" target="challenger"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="champion" target="calibration"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="challenger" target="calibration"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <mxCell id="e9" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="calibration" target="decision"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e10" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="decision" target="outcome"><mxGeometry relative="1" as="geometry"/></mxCell>
+
+        <!-- Explainability / notices / monitoring -->
+        <mxCell id="e11" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="outcome" target="explain"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e12" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="outcome" target="adverse"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e13" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="explain" target="monitor"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e14" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="adverse" target="monitor"><mxGeometry relative="1" as="geometry"/></mxCell>
+        <mxCell id="e15" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;endArrow=block;" edge="1" parent="1" source="monitor" target="api"><mxGeometry relative="1" as="geometry"/></mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>
